@@ -17,6 +17,12 @@
             min-height: 100vh;
             color: white;
             padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        body.light-theme {
+            background: #ffffff;
+            color: #000000;
         }
 
         .container {
@@ -28,6 +34,26 @@
             text-align: center;
             margin-bottom: 30px;
             padding-top: 10px;
+            position: relative;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: #333;
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .light-theme .theme-toggle {
+            background: #007AFF;
+            color: white;
         }
 
         .header h1 {
@@ -41,6 +67,10 @@
             font-size: 14px;
         }
 
+        .light-theme .header p {
+            opacity: 0.6;
+        }
+
         .total-balance {
             background: #1a1a1a;
             border-radius: 12px;
@@ -48,12 +78,22 @@
             margin-bottom: 20px;
             text-align: center;
             border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+
+        .light-theme .total-balance {
+            background: #f5f5f7;
+            border: 1px solid #e0e0e0;
         }
 
         .total-balance-label {
             font-size: 16px;
             opacity: 0.8;
             margin-bottom: 8px;
+        }
+
+        .light-theme .total-balance-label {
+            opacity: 0.6;
         }
 
         .total-balance-amount {
@@ -68,6 +108,12 @@
             padding: 18px;
             margin-bottom: 12px;
             border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+
+        .light-theme .asset-card {
+            background: #f5f5f7;
+            border: 1px solid #e0e0e0;
         }
 
         .asset-card:active {
@@ -142,6 +188,7 @@
         <div class="header">
             <h1>Angel</h1>
             <p>MuWallet</p>
+            <button class="theme-toggle" onclick="toggleTheme()">🌙 Тёмная</button>
         </div>
 
         <div class="total-balance">
@@ -201,5 +248,21 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggle = document.querySelector('.theme-toggle');
+            
+            if (body.classList.contains('light-theme')) {
+                body.classList.remove('light-theme');
+                themeToggle.textContent = '🌙 Тёмная';
+            } else {
+                body.classList.add('light-theme');
+                themeToggle.textContent = '☀️ Светлая';
+            }
+        }
+    </script>
 </body>
 </html>
+
