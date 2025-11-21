@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MuWallet - Кошелек</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .balance-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+        .balance-amount {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+        .btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>MuWallet 💙</h1>
+            <p>Ваш надежный кошелек</p>
+        </div>
+        
+        <div class="balance-card">
+            <p>Текущий баланс</p>
+            <div class="balance-amount" id="balance">0.00 ₽</div>
+            <p>Демо версия</p>
+        </div>
+        
+        <button class="btn" onclick="showDeposit()">📥 Пополнить</button>
+        <button class="btn" onclick="showWithdraw()">📤 Вывести</button>
+        <button class="btn" onclick="showHistory()">📊 История операций</button>
+        
+        <div style="text-align: center; margin-top: 30px; font-size: 12px; opacity: 0.7;">
+            MuWallet © 2024
+        </div>
+    </div>
+
+    <script>
+        function showDeposit() {
+            alert('Для пополнения свяжитесь с поддержкой: @MuWalletSupport');
+        }
+        
+        function showWithdraw() {
+            alert('Для вывода средств свяжитесь с поддержкой: @MuWalletSupport');
+        }
+        
+        function showHistory() {
+            alert('Переход в историю операций');
+        }
+        
+        // В реальном приложении здесь будет запрос к API для получения баланса
+        document.getElementById('balance').textContent = '0.00 ₽';
+    </script>
+</body>
+</html>
