@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MuWallet</title>
+    <title>MuWallet - Кошелек</title>
     <style>
         * {
             margin: 0;
@@ -13,16 +13,10 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #ffffff;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: #000000;
+            color: white;
             padding: 20px;
-            transition: all 0.3s ease;
-        }
-
-        body.dark-theme {
-            background: #000000;
-            color: #ffffff;
         }
 
         .container {
@@ -42,19 +36,19 @@
             margin-bottom: 5px;
         }
 
+        .header p {
+            opacity: 0.8;
+            font-size: 14px;
+        }
+
         .total-balance {
-            background: #f5f5f7;
-            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
             padding: 25px;
             margin-bottom: 20px;
             text-align: center;
-            border: 1px solid #e0e0e0;
-            transition: all 0.3s ease;
-        }
-
-        .dark-theme .total-balance {
-            background: #1a1a1a;
-            border: 1px solid #333;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .total-balance-label {
@@ -63,45 +57,59 @@
             margin-bottom: 8px;
         }
 
-        .dark-theme .total-balance-label {
-            opacity: 0.6;
-        }
-
         .total-balance-amount {
             font-size: 36px;
             font-weight: 700;
             margin-bottom: 5px;
         }
 
-        .assets-section {
-            margin-bottom: 15px;
-        }
-
-        .assets-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
-
-        .asset-card {
-            background: #f5f5f7;
-            border-radius: 12px;
-            padding: 18px;
-            margin-bottom: 12px;
-            border: 1px solid #e0e0e0;
-            transition: all 0.3s ease;
-        }
-
-        .dark-theme .asset-card {
-            background: #1a1a1a;
-            border: 1px solid #333;
-        }
-
-        .asset-card:active {
+        .total-balance-change {
+            font-size: 14px;
             opacity: 0.8;
         }
 
-        .asset-row {
+        .positive {
+            color: #4CD964;
+        }
+
+        .negative {
+            color: #FF3B30;
+        }
+
+        .assets-section {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-left: 10px;
+        }
+
+        .asset-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+
+        .asset-card:active {
+            transform: scale(0.98);
+        }
+
+        .asset-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .asset-info {
             display: flex;
             align-items: center;
             gap: 12px;
@@ -110,120 +118,467 @@
         .asset-icon {
             width: 40px;
             height: 40px;
-            border-radius: 8px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 18px;
             font-weight: bold;
-            flex-shrink: 0;
         }
 
         .toncoin-icon {
-            background: #0088cc;
-            color: white;
+            background: linear-gradient(135deg, #0088CC, #0066AA);
         }
 
         .tether-icon {
-            background: #26a17b;
-            color: white;
+            background: linear-gradient(135deg, #26A17B, #1E8C6E);
         }
 
         .rub-icon {
-            background: #d52b1e;
-            color: white;
+            background: linear-gradient(135deg, #D52B1E, #B22222);
         }
 
         .uah-icon {
-            background: #ffd700;
-            color: black;
+            background: linear-gradient(135deg, #0057B7, #004C9E);
         }
 
         .asset-name {
             font-weight: 600;
             font-size: 16px;
-            flex: 1;
         }
 
-        .asset-crypto-amount {
+        .asset-amount {
             font-weight: 700;
             font-size: 16px;
-            text-align: right;
+        }
+
+        .asset-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .asset-price {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .asset-change {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .asset-value {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: background 0.3s;
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .check-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .check-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-label {
+            font-size: 14px;
+            font-weight: 600;
+            opacity: 0.8;
+        }
+
+        .form-select, .form-input {
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            font-size: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-select option {
+            background: #764ba2;
+            color: white;
+        }
+
+        .create-check-btn {
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #4CD964, #2E8B57);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .create-check-btn:active {
+            transform: scale(0.95);
+        }
+
+        .check-result {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .check-code {
+            font-family: monospace;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            word-break: break-all;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .asset-card {
+            animation: fadeIn 0.3s ease-out;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>MuWallet</h1>
+            <h1 id="userName">MuWallet</h1>
+            <p>Ваш надежный кошелек</p>
         </div>
 
         <div class="total-balance">
             <div class="total-balance-label">Общий баланс</div>
-            <div class="total-balance-amount">$0.00</div>
+            <div class="total-balance-amount" id="totalBalance">$0.00</div>
+            <div class="total-balance-change positive" id="balanceChange">+0.00%</div>
         </div>
 
         <div class="assets-section">
-            <div class="assets-title">Активы</div>
-        </div>
+            <div class="section-title">Активы</div>
+            
+            <div class="asset-card" id="toncoin-card">
+                <div class="asset-header">
+                    <div class="asset-info">
+                        <div class="asset-icon toncoin-icon">T</div>
+                        <div class="asset-name">Toncoin</div>
+                    </div>
+                    <div class="asset-amount" id="toncoin-amount">0 TON</div>
+                </div>
+                <div class="asset-details">
+                    <div class="asset-price">
+                        <div class="asset-change positive">$2.82 +0.18%</div>
+                    </div>
+                    <div class="asset-value" id="toncoin-value">$0</div>
+                </div>
+            </div>
 
-        <div class="asset-card">
-            <div class="asset-row">
-                <div class="asset-icon toncoin-icon">T</div>
-                <div class="asset-name">Toncoin</div>
-                <div class="asset-crypto-amount">0 TON</div>
+            <div class="asset-card" id="tether-card">
+                <div class="asset-header">
+                    <div class="asset-info">
+                        <div class="asset-icon tether-icon">U</div>
+                        <div class="asset-name">Tether</div>
+                    </div>
+                    <div class="asset-amount" id="tether-amount">0 USDT</div>
+                </div>
+                <div class="asset-details">
+                    <div class="asset-price">
+                        <div class="asset-change negative">$1.00 -0.05%</div>
+                    </div>
+                    <div class="asset-value" id="tether-value">$0</div>
+                </div>
+            </div>
+
+            <div class="asset-card" id="rub-card">
+                <div class="asset-header">
+                    <div class="asset-info">
+                        <div class="asset-icon rub-icon">R</div>
+                        <div class="asset-name">Russian Ruble</div>
+                    </div>
+                    <div class="asset-amount" id="rub-amount">0 RUB</div>
+                </div>
+                <div class="asset-details">
+                    <div class="asset-price">
+                        <div class="asset-change positive">$0.011 +0.12%</div>
+                    </div>
+                    <div class="asset-value" id="rub-value">$0</div>
+                </div>
+            </div>
+
+            <div class="asset-card" id="uah-card">
+                <div class="asset-header">
+                    <div class="asset-info">
+                        <div class="asset-icon uah-icon">U</div>
+                        <div class="asset-name">Ukrainian Hryvnia</div>
+                    </div>
+                    <div class="asset-amount" id="uah-amount">0 UAH</div>
+                </div>
+                <div class="asset-details">
+                    <div class="asset-price">
+                        <div class="asset-change positive">$0.026 +0.08%</div>
+                    </div>
+                    <div class="asset-value" id="uah-value">$0</div>
+                </div>
             </div>
         </div>
 
-        <div class="asset-card">
-            <div class="asset-row">
-                <div class="asset-icon tether-icon">U</div>
-                <div class="asset-name">Tether</div>
-                <div class="asset-crypto-amount">0 USDT</div>
-            </div>
+        <div class="actions">
+            <button class="action-btn" onclick="showCheckSection()">💸 Создать чек</button>
+            <button class="action-btn" onclick="claimCheck()">🎫 Активировать чек</button>
         </div>
 
-        <div class="asset-card">
-            <div class="asset-row">
-                <div class="asset-icon rub-icon">R</div>
-                <div class="asset-name">Russian Ruble</div>
-                <div class="asset-crypto-amount">0 RUB</div>
-            </div>
-        </div>
-
-        <div class="asset-card">
-            <div class="asset-row">
-                <div class="asset-icon uah-icon">U</div>
-                <div class="asset-name">Ukrainian Hryvnia</div>
-                <div class="asset-crypto-amount">0 UAH</div>
+        <div class="check-section hidden" id="checkSection">
+            <h3 style="margin-bottom: 15px; text-align: center;">Создание чека</h3>
+            <div class="check-form">
+                <div class="form-group">
+                    <label class="form-label">Валюта</label>
+                    <select class="form-select" id="checkCurrency">
+                        <option value="toncoin">💎 Toncoin (TON)</option>
+                        <option value="tether">💵 Tether (USDT)</option>
+                        <option value="rub">🇷🇺 Russian Ruble (RUB)</option>
+                        <option value="uah">🇺🇦 Ukrainian Hryvnia (UAH)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Сумма</label>
+                    <input type="number" class="form-input" id="checkAmount" placeholder="Введите сумму" min="0.01" step="0.01">
+                </div>
+                <button class="create-check-btn" onclick="createCheck()">Создать чек</button>
+                <div class="check-result hidden" id="checkResult">
+                    <h4>✅ Чек создан!</h4>
+                    <p>Код чека:</p>
+                    <div class="check-code" id="checkCode"></div>
+                    <p>Поделитесь этим кодом с получателем</p>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Функция для переключения темы
-        function toggleTheme() {
-            document.body.classList.toggle('dark-theme');
+        // Текущий пользователь (в реальном приложении будет из Telegram Web App)
+        let currentUser = {
+            id: 123456789, // Пример ID, в реальном приложении будет из initData
+            name: "Пользователь"
+        };
+
+        // Данные баланса
+        let userBalance = {
+            toncoin: 0,
+            tether: 0,
+            rub: 0,
+            uah: 0,
+            total_usd: 0
+        };
+
+        // API endpoints
+        const API_BASE = 'http://localhost:5000/api';
+
+        // Инициализация приложения
+        async function initApp() {
+            // В реальном приложении здесь будет получение initData от Telegram
+            await loadUserData();
+            updateUI();
         }
 
-        // Добавляем кнопку переключения темы
-        const header = document.querySelector('.header');
-        const themeButton = document.createElement('button');
-        themeButton.textContent = '🌙';
-        themeButton.style.cssText = `
-            position: absolute;
-            top: 10px;
-            right: 0;
-            background: none;
-            border: none;
-            font-size: 20px;
-            cursor: pointer;
-            padding: 5px;
-        `;
-        themeButton.onclick = toggleTheme;
-        
-        header.style.position = 'relative';
-        header.appendChild(themeButton);
+        // Загрузка данных пользователя
+        async function loadUserData() {
+            try {
+                const response = await fetch(`${API_BASE}/balance/${currentUser.id}`);
+                if (response.ok) {
+                    userBalance = await response.json();
+                } else {
+                    console.error('Ошибка загрузки баланса');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+            }
+        }
+
+        // Обновление интерфейса
+        function updateUI() {
+            // Общий баланс
+            document.getElementById('totalBalance').textContent = `$${userBalance.total_usd.toFixed(2)}`;
+            document.getElementById('userName').textContent = currentUser.name;
+
+            // Toncoin
+            document.getElementById('toncoin-amount').textContent = `${userBalance.toncoin.toFixed(2)} TON`;
+            document.getElementById('toncoin-value').textContent = `$${(userBalance.toncoin * 2.82).toFixed(2)}`;
+
+            // Tether
+            document.getElementById('tether-amount').textContent = `${userBalance.tether.toFixed(2)} USDT`;
+            document.getElementById('tether-value').textContent = `$${(userBalance.tether * 1.00).toFixed(2)}`;
+
+            // Rub
+            document.getElementById('rub-amount').textContent = `${userBalance.rub.toFixed(2)} RUB`;
+            document.getElementById('rub-value').textContent = `$${(userBalance.rub * 0.011).toFixed(2)}`;
+
+            // UAH
+            document.getElementById('uah-amount').textContent = `${userBalance.uah.toFixed(2)} UAH`;
+            document.getElementById('uah-value').textContent = `$${(userBalance.uah * 0.026).toFixed(2)}`;
+        }
+
+        // Показать секцию создания чека
+        function showCheckSection() {
+            document.getElementById('checkSection').classList.remove('hidden');
+        }
+
+        // Создать чек
+        async function createCheck() {
+            const currency = document.getElementById('checkCurrency').value;
+            const amount = parseFloat(document.getElementById('checkAmount').value);
+
+            if (!amount || amount <= 0) {
+                alert('Введите корректную сумму');
+                return;
+            }
+
+            // Проверяем баланс
+            if (userBalance[currency] < amount) {
+                alert('Недостаточно средств');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/create_check`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        user_id: currentUser.id,
+                        currency: currency,
+                        amount: amount
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Показываем результат
+                    document.getElementById('checkCode').textContent = result.check_code;
+                    document.getElementById('checkResult').classList.remove('hidden');
+                    
+                    // Обновляем баланс
+                    await loadUserData();
+                    updateUI();
+                } else {
+                    alert('Ошибка: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Ошибка создания чека:', error);
+                alert('Ошибка при создании чека');
+            }
+        }
+
+        // Активировать чек
+        async function claimCheck() {
+            const checkCode = prompt('Введите код чека:');
+            if (!checkCode) return;
+
+            try {
+                const response = await fetch(`${API_BASE}/claim_check`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        user_id: currentUser.id,
+                        check_code: checkCode.toUpperCase()
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert('✅ ' + result.message);
+                    // Обновляем баланс
+                    await loadUserData();
+                    updateUI();
+                } else {
+                    alert('❌ ' + result.error);
+                }
+            } catch (error) {
+                console.error('Ошибка активации чека:', error);
+                alert('Ошибка при активации чека');
+            }
+        }
+
+        // Обработчики кликов по карточкам активов
+        document.getElementById('toncoin-card').addEventListener('click', () => {
+            document.getElementById('checkCurrency').value = 'toncoin';
+            showCheckSection();
+        });
+
+        document.getElementById('tether-card').addEventListener('click', () => {
+            document.getElementById('checkCurrency').value = 'tether';
+            showCheckSection();
+        });
+
+        document.getElementById('rub-card').addEventListener('click', () => {
+            document.getElementById('checkCurrency').value = 'rub';
+            showCheckSection();
+        });
+
+        document.getElementById('uah-card').addEventListener('click', () => {
+            document.getElementById('checkCurrency').value = 'uah';
+            showCheckSection();
+        });
+
+        // Запуск приложения
+        document.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>
 </html>
