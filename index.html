@@ -34,26 +34,6 @@
             text-align: center;
             margin-bottom: 30px;
             padding-top: 10px;
-            position: relative;
-        }
-
-        .theme-toggle {
-            position: absolute;
-            top: 0;
-            right: 0;
-            background: #f0f0f0;
-            border: none;
-            color: #000000;
-            padding: 8px 12px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: all 0.3s ease;
-        }
-
-        .dark-theme .theme-toggle {
-            background: #333;
-            color: white;
         }
 
         .header h1 {
@@ -125,7 +105,6 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 8px;
         }
 
         .asset-icon {
@@ -171,41 +150,17 @@
             font-size: 16px;
             text-align: right;
         }
-
-        .asset-details {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 5px;
-        }
-
-        .asset-price {
-            font-size: 14px;
-            opacity: 0.8;
-        }
-
-        .dark-theme .asset-price {
-            opacity: 0.6;
-        }
-
-        .asset-value {
-            font-size: 16px;
-            font-weight: 600;
-            text-align: right;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>MuWallet</h1>
-            <button class="theme-toggle" onclick="toggleTheme()">☀️ Светлая</button>
         </div>
 
         <div class="total-balance">
             <div class="total-balance-label">Общий баланс</div>
-            <div class="total-balance-amount">$308.50</div>
-            <div class="asset-price">+0.00%</div>
+            <div class="total-balance-amount">$0.00</div>
         </div>
 
         <div class="assets-section">
@@ -216,11 +171,7 @@
             <div class="asset-row">
                 <div class="asset-icon toncoin-icon">T</div>
                 <div class="asset-name">Toncoin</div>
-                <div class="asset-crypto-amount">12.5 TON</div>
-            </div>
-            <div class="asset-details">
-                <div class="asset-price">$2.82 +0.18%</div>
-                <div class="asset-value">$35.25</div>
+                <div class="asset-crypto-amount">0 TON</div>
             </div>
         </div>
 
@@ -228,11 +179,7 @@
             <div class="asset-row">
                 <div class="asset-icon tether-icon">U</div>
                 <div class="asset-name">Tether</div>
-                <div class="asset-crypto-amount">150.75 USDT</div>
-            </div>
-            <div class="asset-details">
-                <div class="asset-price">$1.00 -0.05%</div>
-                <div class="asset-value">$150.75</div>
+                <div class="asset-crypto-amount">0 USDT</div>
             </div>
         </div>
 
@@ -240,11 +187,7 @@
             <div class="asset-row">
                 <div class="asset-icon rub-icon">R</div>
                 <div class="asset-name">Russian Ruble</div>
-                <div class="asset-crypto-amount">5000 RUB</div>
-            </div>
-            <div class="asset-details">
-                <div class="asset-price">$0.0110 +0.12%</div>
-                <div class="asset-value">$55.00</div>
+                <div class="asset-crypto-amount">0 RUB</div>
             </div>
         </div>
 
@@ -252,28 +195,36 @@
             <div class="asset-row">
                 <div class="asset-icon uah-icon">U</div>
                 <div class="asset-name">Ukrainian Hryvnia</div>
-                <div class="asset-crypto-amount">2500 UAH</div>
-            </div>
-            <div class="asset-details">
-                <div class="asset-price">$0.027 +0.08%</div>
-                <div class="asset-value">$67.50</div>
+                <div class="asset-crypto-amount">0 UAH</div>
             </div>
         </div>
     </div>
 
     <script>
+        // Функция для переключения темы
         function toggleTheme() {
-            const body = document.body;
-            const themeToggle = document.querySelector('.theme-toggle');
-            
-            if (body.classList.contains('dark-theme')) {
-                body.classList.remove('dark-theme');
-                themeToggle.textContent = '☀️ Светлая';
-            } else {
-                body.classList.add('dark-theme');
-                themeToggle.textContent = '🌙 Тёмная';
-            }
+            document.body.classList.toggle('dark-theme');
         }
+
+        // Добавляем кнопку переключения темы
+        const header = document.querySelector('.header');
+        const themeButton = document.createElement('button');
+        themeButton.textContent = '🌙';
+        themeButton.style.cssText = `
+            position: absolute;
+            top: 10px;
+            right: 0;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 5px;
+        `;
+        themeButton.onclick = toggleTheme;
+        
+        header.style.position = 'relative';
+        header.appendChild(themeButton);
     </script>
 </body>
 </html>
+
