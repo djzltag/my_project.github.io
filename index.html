@@ -13,16 +13,16 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #000000;
+            background: #ffffff;
             min-height: 100vh;
-            color: white;
+            color: #000000;
             padding: 20px;
             transition: all 0.3s ease;
         }
 
-        body.light-theme {
-            background: #ffffff;
-            color: #000000;
+        body.dark-theme {
+            background: #000000;
+            color: #ffffff;
         }
 
         .container {
@@ -41,9 +41,9 @@
             position: absolute;
             top: 0;
             right: 0;
-            background: #333;
+            background: #f0f0f0;
             border: none;
-            color: white;
+            color: #000000;
             padding: 8px 12px;
             border-radius: 20px;
             cursor: pointer;
@@ -51,8 +51,8 @@
             transition: all 0.3s ease;
         }
 
-        .light-theme .theme-toggle {
-            background: #007AFF;
+        .dark-theme .theme-toggle {
+            background: #333;
             color: white;
         }
 
@@ -62,28 +62,19 @@
             margin-bottom: 5px;
         }
 
-        .header p {
-            opacity: 0.8;
-            font-size: 14px;
-        }
-
-        .light-theme .header p {
-            opacity: 0.6;
-        }
-
         .total-balance {
-            background: #1a1a1a;
+            background: #f5f5f7;
             border-radius: 12px;
             padding: 25px;
             margin-bottom: 20px;
             text-align: center;
-            border: 1px solid #333;
+            border: 1px solid #e0e0e0;
             transition: all 0.3s ease;
         }
 
-        .light-theme .total-balance {
-            background: #f5f5f7;
-            border: 1px solid #e0e0e0;
+        .dark-theme .total-balance {
+            background: #1a1a1a;
+            border: 1px solid #333;
         }
 
         .total-balance-label {
@@ -92,7 +83,7 @@
             margin-bottom: 8px;
         }
 
-        .light-theme .total-balance-label {
+        .dark-theme .total-balance-label {
             opacity: 0.6;
         }
 
@@ -102,35 +93,39 @@
             margin-bottom: 5px;
         }
 
+        .assets-section {
+            margin-bottom: 15px;
+        }
+
+        .assets-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
         .asset-card {
-            background: #1a1a1a;
+            background: #f5f5f7;
             border-radius: 12px;
             padding: 18px;
             margin-bottom: 12px;
-            border: 1px solid #333;
+            border: 1px solid #e0e0e0;
             transition: all 0.3s ease;
         }
 
-        .light-theme .asset-card {
-            background: #f5f5f7;
-            border: 1px solid #e0e0e0;
+        .dark-theme .asset-card {
+            background: #1a1a1a;
+            border: 1px solid #333;
         }
 
         .asset-card:active {
             opacity: 0.8;
         }
 
-        .asset-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .asset-info {
+        .asset-row {
             display: flex;
             align-items: center;
             gap: 12px;
+            margin-bottom: 8px;
         }
 
         .asset-icon {
@@ -142,18 +137,22 @@
             justify-content: center;
             font-size: 18px;
             font-weight: bold;
+            flex-shrink: 0;
         }
 
         .toncoin-icon {
             background: #0088cc;
+            color: white;
         }
 
         .tether-icon {
             background: #26a17b;
+            color: white;
         }
 
         .rub-icon {
             background: #d52b1e;
+            color: white;
         }
 
         .uah-icon {
@@ -164,86 +163,99 @@
         .asset-name {
             font-weight: 600;
             font-size: 16px;
+            flex: 1;
         }
 
-        .asset-amount {
+        .asset-crypto-amount {
             font-weight: 700;
             font-size: 16px;
+            text-align: right;
         }
 
         .asset-details {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-top: 5px;
+        }
+
+        .asset-price {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .dark-theme .asset-price {
+            opacity: 0.6;
         }
 
         .asset-value {
             font-size: 16px;
             font-weight: 600;
+            text-align: right;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>Angel</h1>
-            <p>MuWallet</p>
-            <button class="theme-toggle" onclick="toggleTheme()">🌙 Тёмная</button>
+            <h1>MuWallet</h1>
+            <button class="theme-toggle" onclick="toggleTheme()">☀️ Светлая</button>
         </div>
 
         <div class="total-balance">
             <div class="total-balance-label">Общий баланс</div>
             <div class="total-balance-amount">$308.50</div>
+            <div class="asset-price">+0.00%</div>
+        </div>
+
+        <div class="assets-section">
+            <div class="assets-title">Активы</div>
         </div>
 
         <div class="asset-card">
-            <div class="asset-header">
-                <div class="asset-info">
-                    <div class="asset-icon toncoin-icon">T</div>
-                    <div class="asset-name">Toncoin</div>
-                </div>
+            <div class="asset-row">
+                <div class="asset-icon toncoin-icon">T</div>
+                <div class="asset-name">Toncoin</div>
+                <div class="asset-crypto-amount">12.5 TON</div>
             </div>
             <div class="asset-details">
-                <div class="asset-amount">12.5 TON</div>
+                <div class="asset-price">$2.82 +0.18%</div>
                 <div class="asset-value">$35.25</div>
             </div>
         </div>
 
         <div class="asset-card">
-            <div class="asset-header">
-                <div class="asset-info">
-                    <div class="asset-icon tether-icon">U</div>
-                    <div class="asset-name">Tether</div>
-                </div>
+            <div class="asset-row">
+                <div class="asset-icon tether-icon">U</div>
+                <div class="asset-name">Tether</div>
+                <div class="asset-crypto-amount">150.75 USDT</div>
             </div>
             <div class="asset-details">
-                <div class="asset-amount">150.75 USDT</div>
+                <div class="asset-price">$1.00 -0.05%</div>
                 <div class="asset-value">$150.75</div>
             </div>
         </div>
 
         <div class="asset-card">
-            <div class="asset-header">
-                <div class="asset-info">
-                    <div class="asset-icon rub-icon">R</div>
-                    <div class="asset-name">Russian Ruble</div>
-                </div>
+            <div class="asset-row">
+                <div class="asset-icon rub-icon">R</div>
+                <div class="asset-name">Russian Ruble</div>
+                <div class="asset-crypto-amount">5000 RUB</div>
             </div>
             <div class="asset-details">
-                <div class="asset-amount">5000 RUB</div>
+                <div class="asset-price">$0.0110 +0.12%</div>
                 <div class="asset-value">$55.00</div>
             </div>
         </div>
 
         <div class="asset-card">
-            <div class="asset-header">
-                <div class="asset-info">
-                    <div class="asset-icon uah-icon">U</div>
-                    <div class="asset-name">Ukrainian Hryvnia</div>
-                </div>
+            <div class="asset-row">
+                <div class="asset-icon uah-icon">U</div>
+                <div class="asset-name">Ukrainian Hryvnia</div>
+                <div class="asset-crypto-amount">2500 UAH</div>
             </div>
             <div class="asset-details">
-                <div class="asset-amount">2500 UAH</div>
+                <div class="asset-price">$0.027 +0.08%</div>
                 <div class="asset-value">$67.50</div>
             </div>
         </div>
@@ -254,15 +266,14 @@
             const body = document.body;
             const themeToggle = document.querySelector('.theme-toggle');
             
-            if (body.classList.contains('light-theme')) {
-                body.classList.remove('light-theme');
-                themeToggle.textContent = '🌙 Тёмная';
-            } else {
-                body.classList.add('light-theme');
+            if (body.classList.contains('dark-theme')) {
+                body.classList.remove('dark-theme');
                 themeToggle.textContent = '☀️ Светлая';
+            } else {
+                body.classList.add('dark-theme');
+                themeToggle.textContent = '🌙 Тёмная';
             }
         }
     </script>
 </body>
 </html>
-
