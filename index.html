@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MuWallet - Активы</title>
+    <title>MuWallet</title>
     <style>
         * {
             margin: 0;
@@ -60,26 +60,6 @@
             font-size: 36px;
             font-weight: 700;
             margin-bottom: 5px;
-        }
-
-        .total-balance-change {
-            font-size: 14px;
-            opacity: 0.8;
-        }
-
-        .positive {
-            color: #00ff00;
-        }
-
-        .assets-section {
-            margin-bottom: 20px;
-        }
-
-        .section-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            padding-left: 10px;
         }
 
         .asset-card {
@@ -151,11 +131,6 @@
             align-items: center;
         }
 
-        .asset-change {
-            font-size: 14px;
-            font-weight: 500;
-        }
-
         .asset-value {
             font-size: 16px;
             font-weight: 600;
@@ -206,66 +181,57 @@
         <div class="total-balance">
             <div class="total-balance-label">Общий баланс</div>
             <div class="total-balance-amount">$308.50</div>
-            <div class="total-balance-change positive">+0.33%</div>
         </div>
 
-        <div class="assets-section">
-            <div class="section-title">Активы</div>
-            
-            <div class="asset-card">
-                <div class="asset-header">
-                    <div class="asset-info">
-                        <div class="asset-icon toncoin-icon">T</div>
-                        <div class="asset-name">Toncoin</div>
-                    </div>
-                    <div class="asset-change positive">+0.18%</div>
-                </div>
-                <div class="asset-details">
-                    <div class="asset-amount">12.5 TON</div>
-                    <div class="asset-value">$35.25</div>
+        <div class="asset-card">
+            <div class="asset-header">
+                <div class="asset-info">
+                    <div class="asset-icon toncoin-icon">T</div>
+                    <div class="asset-name">Toncoin</div>
                 </div>
             </div>
+            <div class="asset-details">
+                <div class="asset-amount">12.5 TON</div>
+                <div class="asset-value">$35.25</div>
+            </div>
+        </div>
 
-            <div class="asset-card">
-                <div class="asset-header">
-                    <div class="asset-info">
-                        <div class="asset-icon tether-icon">U</div>
-                        <div class="asset-name">Tether</div>
-                    </div>
-                    <div class="asset-change negative">-0.05%</div>
-                </div>
-                <div class="asset-details">
-                    <div class="asset-amount">150.75 USDT</div>
-                    <div class="asset-value">$150.75</div>
+        <div class="asset-card">
+            <div class="asset-header">
+                <div class="asset-info">
+                    <div class="asset-icon tether-icon">U</div>
+                    <div class="asset-name">Tether</div>
                 </div>
             </div>
+            <div class="asset-details">
+                <div class="asset-amount">150.75 USDT</div>
+                <div class="asset-value">$150.75</div>
+            </div>
+        </div>
 
-            <div class="asset-card">
-                <div class="asset-header">
-                    <div class="asset-info">
-                        <div class="asset-icon rub-icon">R</div>
-                        <div class="asset-name">Russian Ruble</div>
-                    </div>
-                    <div class="asset-change positive">+0.12%</div>
-                </div>
-                <div class="asset-details">
-                    <div class="asset-amount">5000 RUB</div>
-                    <div class="asset-value">$55.00</div>
+        <div class="asset-card">
+            <div class="asset-header">
+                <div class="asset-info">
+                    <div class="asset-icon rub-icon">R</div>
+                    <div class="asset-name">Russian Ruble</div>
                 </div>
             </div>
+            <div class="asset-details">
+                <div class="asset-amount">5000 RUB</div>
+                <div class="asset-value">$55.00</div>
+            </div>
+        </div>
 
-            <div class="asset-card">
-                <div class="asset-header">
-                    <div class="asset-info">
-                        <div class="asset-icon uah-icon">U</div>
-                        <div class="asset-name">Ukrainian Hryvnia</div>
-                    </div>
-                    <div class="asset-change positive">+0.08%</div>
+        <div class="asset-card">
+            <div class="asset-header">
+                <div class="asset-info">
+                    <div class="asset-icon uah-icon">U</div>
+                    <div class="asset-name">Ukrainian Hryvnia</div>
                 </div>
-                <div class="asset-details">
-                    <div class="asset-amount">2500 UAH</div>
-                    <div class="asset-value">$67.50</div>
-                </div>
+            </div>
+            <div class="asset-details">
+                <div class="asset-amount">2500 UAH</div>
+                <div class="asset-value">$67.50</div>
             </div>
         </div>
     </div>
