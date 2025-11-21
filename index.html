@@ -13,15 +13,54 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: white;
+            color: var(--text-color);
             padding: 20px;
+            background: var(--bg-gradient);
+            transition: all 0.3s ease;
+        }
+
+        :root {
+            --bg-gradient: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+            --card-bg: rgba(255, 255, 255, 0.15);
+            --card-border: rgba(255, 255, 255, 0.2);
+            --text-color: white;
+            --action-btn-bg: rgba(255, 255, 255, 0.2);
+        }
+
+        .dark-theme {
+            --bg-gradient: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --card-border: rgba(255, 255, 255, 0.15);
+            --text-color: #ffffff;
+            --action-btn-bg: rgba(255, 255, 255, 0.15);
+        }
+
+        .light-theme {
+            --bg-gradient: linear-gradient(180deg, #f5f7fa 0%, #c3cfe2 100%);
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --card-border: rgba(255, 255, 255, 0.9);
+            --text-color: #333333;
+            --action-btn-bg: rgba(255, 255, 255, 0.6);
         }
 
         .container {
             max-width: 400px;
             margin: 0 auto;
+        }
+
+        .theme-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--action-btn-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 8px 12px;
+            color: var(--text-color);
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            font-size: 12px;
         }
 
         .header {
@@ -31,41 +70,46 @@
         }
 
         .header h1 {
-            font-size: 24px;
-            font-weight: 600;
+            font-size: 28px;
+            font-weight: 700;
             margin-bottom: 5px;
+            color: var(--text-color);
         }
 
         .header p {
             opacity: 0.8;
             font-size: 14px;
+            color: var(--text-color);
         }
 
         .total-balance {
-            background: rgba(255, 255, 255, 0.15);
+            background: var(--card-bg);
             backdrop-filter: blur(20px);
             border-radius: 20px;
             padding: 25px;
             margin-bottom: 20px;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid var(--card-border);
         }
 
         .total-balance-label {
             font-size: 16px;
             opacity: 0.8;
             margin-bottom: 8px;
+            color: var(--text-color);
         }
 
         .total-balance-amount {
             font-size: 36px;
             font-weight: 700;
             margin-bottom: 5px;
+            color: var(--text-color);
         }
 
         .total-balance-change {
             font-size: 14px;
             opacity: 0.8;
+            color: var(--text-color);
         }
 
         .positive {
@@ -85,15 +129,16 @@
             font-weight: 600;
             margin-bottom: 15px;
             padding-left: 10px;
+            color: var(--text-color);
         }
 
         .asset-card {
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--card-bg);
             backdrop-filter: blur(20px);
             border-radius: 16px;
             padding: 18px;
             margin-bottom: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid var(--card-border);
             transition: transform 0.2s;
             cursor: pointer;
         }
@@ -124,6 +169,7 @@
             justify-content: center;
             font-size: 18px;
             font-weight: bold;
+            color: white;
         }
 
         .toncoin-icon {
@@ -145,11 +191,13 @@
         .asset-name {
             font-weight: 600;
             font-size: 16px;
+            color: var(--text-color);
         }
 
         .asset-amount {
             font-weight: 700;
             font-size: 16px;
+            color: var(--text-color);
         }
 
         .asset-details {
@@ -161,6 +209,7 @@
         .asset-price {
             font-size: 14px;
             opacity: 0.8;
+            color: var(--text-color);
         }
 
         .asset-change {
@@ -171,6 +220,7 @@
         .asset-value {
             font-size: 16px;
             font-weight: 600;
+            color: var(--text-color);
         }
 
         .actions {
@@ -184,103 +234,22 @@
             padding: 15px;
             border: none;
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
+            background: var(--action-btn-bg);
+            color: var(--text-color);
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             backdrop-filter: blur(10px);
             transition: background 0.3s;
+            border: 1px solid var(--card-border);
         }
 
         .action-btn:hover {
             background: rgba(255, 255, 255, 0.3);
         }
 
-        .check-section {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border-radius: 16px;
-            padding: 20px;
-            margin-top: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-        }
-
-        .check-form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .form-label {
-            font-size: 14px;
-            font-weight: 600;
-            opacity: 0.8;
-        }
-
-        .form-select, .form-input {
-            padding: 12px;
-            border: none;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            font-size: 16px;
-            backdrop-filter: blur(10px);
-        }
-
-        .form-select option {
-            background: #764ba2;
-            color: white;
-        }
-
-        .create-check-btn {
-            padding: 15px;
-            border: none;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #4CD964, #2E8B57);
-            color: white;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .create-check-btn:active {
-            transform: scale(0.95);
-        }
-
-        .check-result {
-            margin-top: 15px;
-            padding: 15px;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            text-align: center;
-        }
-
-        .check-code {
-            font-family: monospace;
-            font-size: 18px;
-            font-weight: bold;
-            margin: 10px 0;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            word-break: break-all;
-        }
-
         .hidden {
             display: none;
-        }
-
-        .loading {
-            opacity: 0.7;
-            pointer-events: none;
         }
 
         /* Анимации */
@@ -294,10 +263,12 @@
         }
     </style>
 </head>
-<body>
+<body class="dark-theme">
     <div class="container">
+        <button class="theme-switcher" onclick="toggleTheme()">🌙 Тёмная</button>
+        
         <div class="header">
-            <h1 id="userName">MuWallet</h1>
+            <h1>MuWallet</h1>
             <p>Ваш надежный кошелек</p>
         </div>
 
@@ -320,7 +291,7 @@
                 </div>
                 <div class="asset-details">
                     <div class="asset-price">
-                        <div class="asset-change positive">$2.82 +0.18%</div>
+                        <div class="asset-change positive">+0.18%</div>
                     </div>
                     <div class="asset-value" id="toncoin-value">$0</div>
                 </div>
@@ -336,7 +307,7 @@
                 </div>
                 <div class="asset-details">
                     <div class="asset-price">
-                        <div class="asset-change negative">$1.00 -0.05%</div>
+                        <div class="asset-change negative">-0.05%</div>
                     </div>
                     <div class="asset-value" id="tether-value">$0</div>
                 </div>
@@ -352,7 +323,7 @@
                 </div>
                 <div class="asset-details">
                     <div class="asset-price">
-                        <div class="asset-change positive">$0.011 +0.12%</div>
+                        <div class="asset-change positive">+0.12%</div>
                     </div>
                     <div class="asset-value" id="rub-value">$0</div>
                 </div>
@@ -368,82 +339,48 @@
                 </div>
                 <div class="asset-details">
                     <div class="asset-price">
-                        <div class="asset-change positive">$0.026 +0.08%</div>
+                        <div class="asset-change positive">+0.08%</div>
                     </div>
                     <div class="asset-value" id="uah-value">$0</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="actions">
-            <button class="action-btn" onclick="showCheckSection()">💸 Создать чек</button>
-            <button class="action-btn" onclick="claimCheck()">🎫 Активировать чек</button>
-        </div>
-
-        <div class="check-section hidden" id="checkSection">
-            <h3 style="margin-bottom: 15px; text-align: center;">Создание чека</h3>
-            <div class="check-form">
-                <div class="form-group">
-                    <label class="form-label">Валюта</label>
-                    <select class="form-select" id="checkCurrency">
-                        <option value="toncoin">💎 Toncoin (TON)</option>
-                        <option value="tether">💵 Tether (USDT)</option>
-                        <option value="rub">🇷🇺 Russian Ruble (RUB)</option>
-                        <option value="uah">🇺🇦 Ukrainian Hryvnia (UAH)</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Сумма</label>
-                    <input type="number" class="form-input" id="checkAmount" placeholder="Введите сумму" min="0.01" step="0.01">
-                </div>
-                <button class="create-check-btn" onclick="createCheck()">Создать чек</button>
-                <div class="check-result hidden" id="checkResult">
-                    <h4>✅ Чек создан!</h4>
-                    <p>Код чека:</p>
-                    <div class="check-code" id="checkCode"></div>
-                    <p>Поделитесь этим кодом с получателем</p>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Текущий пользователь (в реальном приложении будет из Telegram Web App)
+        // Текущий пользователь
         let currentUser = {
-            id: 123456789, // Пример ID, в реальном приложении будет из initData
+            id: 123456789,
             name: "Пользователь"
         };
 
         // Данные баланса
         let userBalance = {
-            toncoin: 0,
-            tether: 0,
-            rub: 0,
-            uah: 0,
-            total_usd: 0
+            toncoin: 10.5,
+            tether: 150.75,
+            rub: 5000,
+            uah: 1200,
+            total_usd: 210.45
         };
 
-        // API endpoints
-        const API_BASE = 'http://localhost:5000/api';
+        // Текущая тема
+        let currentTheme = 'dark';
 
-        // Инициализация приложения
-        async function initApp() {
-            // В реальном приложении здесь будет получение initData от Telegram
-            await loadUserData();
-            updateUI();
-        }
-
-        // Загрузка данных пользователя
-        async function loadUserData() {
-            try {
-                const response = await fetch(`${API_BASE}/balance/${currentUser.id}`);
-                if (response.ok) {
-                    userBalance = await response.json();
-                } else {
-                    console.error('Ошибка загрузки баланса');
-                }
-            } catch (error) {
-                console.error('Ошибка:', error);
+        // Переключение темы
+        function toggleTheme() {
+            const body = document.body;
+            const themeBtn = document.querySelector('.theme-switcher');
+            
+            if (currentTheme === 'dark') {
+                body.classList.remove('dark-theme');
+                body.classList.add('light-theme');
+                themeBtn.textContent = '☀️ Светлая';
+                currentTheme = 'light';
+            } else {
+                body.classList.remove('light-theme');
+                body.classList.add('dark-theme');
+                themeBtn.textContent = '🌙 Тёмная';
+                currentTheme = 'dark';
             }
         }
 
@@ -451,7 +388,6 @@
         function updateUI() {
             // Общий баланс
             document.getElementById('totalBalance').textContent = `$${userBalance.total_usd.toFixed(2)}`;
-            document.getElementById('userName').textContent = currentUser.name;
 
             // Toncoin
             document.getElementById('toncoin-amount').textContent = `${userBalance.toncoin.toFixed(2)} TON`;
@@ -470,115 +406,8 @@
             document.getElementById('uah-value').textContent = `$${(userBalance.uah * 0.026).toFixed(2)}`;
         }
 
-        // Показать секцию создания чека
-        function showCheckSection() {
-            document.getElementById('checkSection').classList.remove('hidden');
-        }
-
-        // Создать чек
-        async function createCheck() {
-            const currency = document.getElementById('checkCurrency').value;
-            const amount = parseFloat(document.getElementById('checkAmount').value);
-
-            if (!amount || amount <= 0) {
-                alert('Введите корректную сумму');
-                return;
-            }
-
-            // Проверяем баланс
-            if (userBalance[currency] < amount) {
-                alert('Недостаточно средств');
-                return;
-            }
-
-            try {
-                const response = await fetch(`${API_BASE}/create_check`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        user_id: currentUser.id,
-                        currency: currency,
-                        amount: amount
-                    })
-                });
-
-                const result = await response.json();
-
-                if (result.success) {
-                    // Показываем результат
-                    document.getElementById('checkCode').textContent = result.check_code;
-                    document.getElementById('checkResult').classList.remove('hidden');
-                    
-                    // Обновляем баланс
-                    await loadUserData();
-                    updateUI();
-                } else {
-                    alert('Ошибка: ' + result.error);
-                }
-            } catch (error) {
-                console.error('Ошибка создания чека:', error);
-                alert('Ошибка при создании чека');
-            }
-        }
-
-        // Активировать чек
-        async function claimCheck() {
-            const checkCode = prompt('Введите код чека:');
-            if (!checkCode) return;
-
-            try {
-                const response = await fetch(`${API_BASE}/claim_check`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        user_id: currentUser.id,
-                        check_code: checkCode.toUpperCase()
-                    })
-                });
-
-                const result = await response.json();
-
-                if (result.success) {
-                    alert('✅ ' + result.message);
-                    // Обновляем баланс
-                    await loadUserData();
-                    updateUI();
-                } else {
-                    alert('❌ ' + result.error);
-                }
-            } catch (error) {
-                console.error('Ошибка активации чека:', error);
-                alert('Ошибка при активации чека');
-            }
-        }
-
-        // Обработчики кликов по карточкам активов
-        document.getElementById('toncoin-card').addEventListener('click', () => {
-            document.getElementById('checkCurrency').value = 'toncoin';
-            showCheckSection();
-        });
-
-        document.getElementById('tether-card').addEventListener('click', () => {
-            document.getElementById('checkCurrency').value = 'tether';
-            showCheckSection();
-        });
-
-        document.getElementById('rub-card').addEventListener('click', () => {
-            document.getElementById('checkCurrency').value = 'rub';
-            showCheckSection();
-        });
-
-        document.getElementById('uah-card').addEventListener('click', () => {
-            document.getElementById('checkCurrency').value = 'uah';
-            showCheckSection();
-        });
-
         // Запуск приложения
-        document.addEventListener('DOMContentLoaded', initApp);
+        document.addEventListener('DOMContentLoaded', updateUI);
     </script>
 </body>
 </html>
