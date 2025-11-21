@@ -3,92 +3,382 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MuWallet - Кошелек</title>
+    <title>MuWallet - Активы</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
-            padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             color: white;
+            padding: 20px;
         }
+
         .container {
             max-width: 400px;
             margin: 0 auto;
         }
+
         .header {
             text-align: center;
             margin-bottom: 30px;
+            padding-top: 10px;
         }
-        .balance-card {
-            background: rgba(255,255,255,0.1);
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            opacity: 0.8;
+            font-size: 14px;
+        }
+
+        .total-balance {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 25px;
             margin-bottom: 20px;
-            backdrop-filter: blur(10px);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
-        .balance-amount {
-            font-size: 2.5em;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 10px;
-            background: rgba(255,255,255,0.2);
-            color: white;
+
+        .total-balance-label {
             font-size: 16px;
-            cursor: pointer;
-            backdrop-filter: blur(10px);
+            opacity: 0.8;
+            margin-bottom: 8px;
         }
-        .btn:hover {
-            background: rgba(255,255,255,0.3);
+
+        .total-balance-amount {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .total-balance-change {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .positive {
+            color: #4CD964;
+        }
+
+        .negative {
+            color: #FF3B30;
+        }
+
+        .assets-section {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-left: 10px;
+        }
+
+        .asset-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: transform 0.2s;
+        }
+
+        .asset-card:active {
+            transform: scale(0.98);
+        }
+
+        .asset-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .asset-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .asset-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .toncoin-icon {
+            background: linear-gradient(135deg, #0088CC, #0066AA);
+        }
+
+        .tether-icon {
+            background: linear-gradient(135deg, #26A17B, #1E8C6E);
+        }
+
+        .rub-icon {
+            background: linear-gradient(135deg, #D52B1E, #B22222);
+        }
+
+        .asset-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .asset-amount {
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .asset-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .asset-price {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .asset-change {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .asset-value {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .nav-button {
+            background: none;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            opacity: 0.7;
+            transition: all 0.3s;
+        }
+
+        .nav-button.active {
+            opacity: 1;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .asset-card {
+            animation: fadeIn 0.3s ease-out;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>MuWallet 💙</h1>
-            <p>Ваш надежный кошелек</p>
+            <h1>Angel</h1>
+            <p>MuWallet</p>
         </div>
-        
-        <div class="balance-card">
-            <p>Текущий баланс</p>
-            <div class="balance-amount" id="balance">0.00 ₽</div>
-            <p>Демо версия</p>
+
+        <div class="total-balance">
+            <div class="total-balance-label">Общий баланс</div>
+            <div class="total-balance-amount" id="totalBalance">$0.00</div>
+            <div class="total-balance-change positive" id="balanceChange">+0.00%</div>
         </div>
-        
-        <button class="btn" onclick="showDeposit()">📥 Пополнить</button>
-        <button class="btn" onclick="showWithdraw()">📤 Вывести</button>
-        <button class="btn" onclick="showHistory()">📊 История операций</button>
-        
-        <div style="text-align: center; margin-top: 30px; font-size: 12px; opacity: 0.7;">
-            MuWallet © 2024
+
+        <div class="assets-section">
+            <div class="section-title">Активы</div>
+            
+            <div class="asset-card" id="toncoin-card">
+                <div class="asset-header">
+                    <div class="asset-info">
+                        <div class="asset-icon toncoin-icon">T</div>
+                        <div class="asset-name">Toncoin</div>
+                    </div>
+                    <div class="asset-amount" id="toncoin-amount">0 TON</div>
+                </div>
+                <div class="asset-details">
+                    <div class="asset-price">
+                        <div class="asset-change positive" id="toncoin-change">$2.82 +0.18%</div>
+                    </div>
+                    <div class="asset-value" id="toncoin-value">$0</div>
+                </div>
+            </div>
+
+            <div class="asset-card" id="tether-card">
+                <div class="asset-header">
+                    <div class="asset-info">
+                        <div class="asset-icon tether-icon">U</div>
+                        <div class="asset-name">Tether</div>
+                    </div>
+                    <div class="asset-amount" id="tether-amount">0 USDT</div>
+                </div>
+                <div class="asset-details">
+                    <div class="asset-price">
+                        <div class="asset-change negative" id="tether-change">$1.00 -0.05%</div>
+                    </div>
+                    <div class="asset-value" id="tether-value">$0</div>
+                </div>
+            </div>
+
+            <div class="asset-card" id="rub-card">
+                <div class="asset-header">
+                    <div class="asset-info">
+                        <div class="asset-icon rub-icon">R</div>
+                        <div class="asset-name">Russian Ruble</div>
+                    </div>
+                    <div class="asset-amount" id="rub-amount">0 RUB</div>
+                </div>
+                <div class="asset-details">
+                    <div class="asset-price">
+                        <div class="asset-change positive" id="rub-change">$0.011 +0.12%</div>
+                    </div>
+                    <div class="asset-value" id="rub-value">$0</div>
+                </div>
+            </div>
         </div>
     </div>
 
+    <div class="navigation">
+        <button class="nav-button active">Активы</button>
+        <button class="nav-button" onclick="showHistory()">История</button>
+        <button class="nav-button" onclick="showSettings()">Настройки</button>
+    </div>
+
     <script>
-        function showDeposit() {
-            alert('Для пополнения свяжитесь с поддержкой: @MuWalletSupport');
+        // Данные активов (в реальном приложении будут приходить с сервера)
+        const assets = {
+            toncoin: {
+                balance: 0,
+                price: 2.82,
+                change: 0.18,
+                symbol: 'TON'
+            },
+            tether: {
+                balance: 0,
+                price: 1.00,
+                change: -0.05,
+                symbol: 'USDT'
+            },
+            rub: {
+                balance: 0,
+                price: 0.011,
+                change: 0.12,
+                symbol: 'RUB'
+            }
+        };
+
+        // Функция обновления баланса
+        function updateBalances() {
+            let totalBalance = 0;
+
+            // Toncoin
+            const toncoinValue = assets.toncoin.balance * assets.toncoin.price;
+            document.getElementById('toncoin-amount').textContent = `${assets.toncoin.balance} ${assets.toncoin.symbol}`;
+            document.getElementById('toncoin-value').textContent = `$${toncoinValue.toFixed(2)}`;
+            document.getElementById('toncoin-change').textContent = `$${assets.toncoin.price.toFixed(2)} ${assets.toncoin.change >= 0 ? '+' : ''}${assets.toncoin.change.toFixed(2)}%`;
+            document.getElementById('toncoin-change').className = `asset-change ${assets.toncoin.change >= 0 ? 'positive' : 'negative'}`;
+            totalBalance += toncoinValue;
+
+            // Tether
+            const tetherValue = assets.tether.balance * assets.tether.price;
+            document.getElementById('tether-amount').textContent = `${assets.tether.balance} ${assets.tether.symbol}`;
+            document.getElementById('tether-value').textContent = `$${tetherValue.toFixed(2)}`;
+            document.getElementById('tether-change').textContent = `$${assets.tether.price.toFixed(2)} ${assets.tether.change >= 0 ? '+' : ''}${assets.tether.change.toFixed(2)}%`;
+            document.getElementById('tether-change').className = `asset-change ${assets.tether.change >= 0 ? 'positive' : 'negative'}`;
+            totalBalance += tetherValue;
+
+            // Rub
+            const rubValue = assets.rub.balance * assets.rub.price;
+            document.getElementById('rub-amount').textContent = `${assets.rub.balance} ${assets.rub.symbol}`;
+            document.getElementById('rub-value').textContent = `$${rubValue.toFixed(2)}`;
+            document.getElementById('rub-change').textContent = `$${assets.rub.price.toFixed(4)} ${assets.rub.change >= 0 ? '+' : ''}${assets.rub.change.toFixed(2)}%`;
+            document.getElementById('rub-change').className = `asset-change ${assets.rub.change >= 0 ? 'positive' : 'negative'}`;
+            totalBalance += rubValue;
+
+            // Общий баланс
+            document.getElementById('totalBalance').textContent = `$${totalBalance.toFixed(2)}`;
         }
-        
-        function showWithdraw() {
-            alert('Для вывода средств свяжитесь с поддержкой: @MuWalletSupport');
-        }
-        
+
+        // Функции навигации
         function showHistory() {
-            alert('Переход в историю операций');
+            alert('Переход к истории операций');
+            // window.location.href = 'History.html';
         }
-        
-        // В реальном приложении здесь будет запрос к API для получения баланса
-        document.getElementById('balance').textContent = '0.00 ₽';
+
+        function showSettings() {
+            alert('Переход к настройкам');
+        }
+
+        // Имитация получения данных с сервера
+        function loadUserData() {
+            // В реальном приложении здесь будет AJAX запрос к вашему API
+            setTimeout(() => {
+                // Пример данных
+                assets.toncoin.balance = 12.5;
+                assets.tether.balance = 150.75;
+                assets.rub.balance = 5000;
+                
+                updateBalances();
+            }, 1000);
+        }
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserData();
+            
+            // Добавляем обработчики клика на карточки активов
+            document.getElementById('toncoin-card').addEventListener('click', function() {
+                alert('Toncoin: ' + assets.toncoin.balance + ' TON');
+            });
+            
+            document.getElementById('tether-card').addEventListener('click', function() {
+                alert('Tether: ' + assets.tether.balance + ' USDT');
+            });
+            
+            document.getElementById('rub-card').addEventListener('click', function() {
+                alert('Rub: ' + assets.rub.balance + ' RUB');
+            });
+        });
     </script>
 </body>
 </html>
