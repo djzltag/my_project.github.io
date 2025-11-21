@@ -17,6 +17,12 @@
             min-height: 100vh;
             color: white;
             padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        body.light-theme {
+            background: linear-gradient(180deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
         }
 
         .container {
@@ -28,6 +34,7 @@
             text-align: center;
             margin-bottom: 30px;
             padding-top: 10px;
+            position: relative;
         }
 
         .header h1 {
@@ -41,6 +48,27 @@
             font-size: 14px;
         }
 
+        .theme-toggle {
+            position: absolute;
+            right: 0;
+            top: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s;
+        }
+
+        .light-theme .theme-toggle {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
         .total-balance {
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(20px);
@@ -49,6 +77,12 @@
             margin-bottom: 20px;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .light-theme .total-balance {
+            background: rgba(255, 255, 255, 0.8);
+            color: #333;
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .total-balance-label {
@@ -97,6 +131,12 @@
             transition: transform 0.2s;
         }
 
+        .light-theme .asset-card {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
         .asset-card:active {
             transform: scale(0.98);
         }
@@ -123,6 +163,7 @@
             justify-content: center;
             font-size: 18px;
             font-weight: bold;
+            color: white;
         }
 
         .toncoin-icon {
@@ -135,6 +176,10 @@
 
         .rub-icon {
             background: linear-gradient(135deg, #D52B1E, #B22222);
+        }
+
+        .uah-icon {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
         }
 
         .asset-name {
@@ -181,6 +226,11 @@
             justify-content: space-around;
         }
 
+        .light-theme .navigation {
+            background: rgba(255, 255, 255, 0.9);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
         .nav-button {
             background: none;
             border: none;
@@ -190,6 +240,11 @@
             font-size: 14px;
             opacity: 0.7;
             transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .light-theme .nav-button {
+            color: #333;
         }
 
         .nav-button.active {
@@ -197,8 +252,8 @@
             background: rgba(255, 255, 255, 0.2);
         }
 
-        .hidden {
-            display: none;
+        .light-theme .nav-button.active {
+            background: rgba(0, 0, 0, 0.1);
         }
 
         /* Анимации */
@@ -217,6 +272,7 @@
         <div class="header">
             <h1>Angel</h1>
             <p>MuWallet</p>
+            <button class="theme-toggle" id="themeToggle">🌙</button>
         </div>
 
         <div class="total-balance">
@@ -275,13 +331,27 @@
                     <div class="asset-value" id="rub-value">$0</div>
                 </div>
             </div>
+
+            <div class="asset-card" id="uah-card">
+                <div class="asset-header">
+                    <div class="asset-info">
+                        <div class="asset-icon uah-icon">₴</div>
+                        <div class="asset-name">Ukrainian Hryvnia</div>
+                    </div>
+                    <div class="asset-amount" id="uah-amount">0 UAH</div>
+                </div>
+                <div class="asset-details">
+                    <div class="asset-price">
+                        <div class="asset-change positive" id="uah-change">$0.027 +0.08%</div>
+                    </div>
+                    <div class="asset-value" id="uah-value">$0</div>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="navigation">
         <button class="nav-button active">Активы</button>
-        <button class="nav-button" onclick="showHistory()">История</button>
-        <button class="nav-button" onclick="showSettings()">Настройки</button>
     </div>
 
     <script>
@@ -304,6 +374,12 @@
                 price: 0.011,
                 change: 0.12,
                 symbol: 'RUB'
+            },
+            uah: {
+                balance: 0,
+                price: 0.027,
+                change: 0.08,
+                symbol: 'UAH'
             }
         };
 
@@ -335,18 +411,32 @@
             document.getElementById('rub-change').className = `asset-change ${assets.rub.change >= 0 ? 'positive' : 'negative'}`;
             totalBalance += rubValue;
 
+            // UAH
+            const uahValue = assets.uah.balance * assets.uah.price;
+            document.getElementById('uah-amount').textContent = `${assets.uah.balance} ${assets.uah.symbol}`;
+            document.getElementById('uah-value').textContent = `$${uahValue.toFixed(2)}`;
+            document.getElementById('uah-change').textContent = `$${assets.uah.price.toFixed(3)} ${assets.uah.change >= 0 ? '+' : ''}${assets.uah.change.toFixed(2)}%`;
+            document.getElementById('uah-change').className = `asset-change ${assets.uah.change >= 0 ? 'positive' : 'negative'}`;
+            totalBalance += uahValue;
+
             // Общий баланс
             document.getElementById('totalBalance').textContent = `$${totalBalance.toFixed(2)}`;
         }
 
-        // Функции навигации
-        function showHistory() {
-            alert('Переход к истории операций');
-            // window.location.href = 'History.html';
-        }
-
-        function showSettings() {
-            alert('Переход к настройкам');
+        // Функция переключения темы
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggle = document.getElementById('themeToggle');
+            
+            if (body.classList.contains('light-theme')) {
+                body.classList.remove('light-theme');
+                themeToggle.textContent = '🌙';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.classList.add('light-theme');
+                themeToggle.textContent = '☀️';
+                localStorage.setItem('theme', 'light');
+            }
         }
 
         // Имитация получения данных с сервера
@@ -357,6 +447,7 @@
                 assets.toncoin.balance = 12.5;
                 assets.tether.balance = 150.75;
                 assets.rub.balance = 5000;
+                assets.uah.balance = 2500;
                 
                 updateBalances();
             }, 1000);
@@ -364,6 +455,13 @@
 
         // Инициализация при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
+            // Загрузка сохраненной темы
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-theme');
+                document.getElementById('themeToggle').textContent = '☀️';
+            }
+            
             loadUserData();
             
             // Добавляем обработчики клика на карточки активов
@@ -378,8 +476,14 @@
             document.getElementById('rub-card').addEventListener('click', function() {
                 alert('Rub: ' + assets.rub.balance + ' RUB');
             });
+            
+            document.getElementById('uah-card').addEventListener('click', function() {
+                alert('Hryvnia: ' + assets.uah.balance + ' UAH');
+            });
+            
+            // Обработчик переключения темы
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
         });
     </script>
 </body>
 </html>
-
