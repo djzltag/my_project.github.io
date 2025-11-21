@@ -49,31 +49,6 @@
             margin: 0 auto;
         }
 
-        .auth-container {
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        .auth-btn {
-            background: var(--action-btn-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 15px 25px;
-            color: var(--text-color);
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            backdrop-filter: blur(10px);
-            margin: 10px 0;
-            text-decoration: none;
-            display: inline-block;
-            transition: background 0.3s;
-        }
-
-        .auth-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
         .theme-switcher {
             position: absolute;
             top: 20px;
@@ -277,23 +252,20 @@
             display: none;
         }
 
-        .user-info {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: var(--action-btn-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 8px 12px;
-            color: var(--text-color);
-            backdrop-filter: blur(10px);
-            font-size: 12px;
-        }
-
         .loading {
             text-align: center;
             padding: 20px;
             color: var(--text-color);
+        }
+
+        .error-message {
+            background: rgba(255, 59, 48, 0.2);
+            border: 1px solid rgba(255, 59, 48, 0.5);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 10px 0;
+            color: var(--text-color);
+            text-align: center;
         }
 
         /* Анимации */
@@ -309,129 +281,107 @@
 </head>
 <body class="dark-theme">
     <div class="container">
-        <div class="user-info" id="userInfo" style="display: none;">
-            Пользователь: <span id="userName">Гость</span>
-        </div>
-        
         <button class="theme-switcher" onclick="toggleTheme()">🌙 Тёмная</button>
         
-        <div id="authContainer" class="auth-container">
-            <div class="header">
-                <h1>MuWallet</h1>
-                <p>Ваш надежный кошелек</p>
+        <div class="header">
+            <h1>MuWallet</h1>
+            <p>Ваш надежный кошелек</p>
+        </div>
+
+        <div class="total-balance">
+            <div class="total-balance-label">Общий баланс</div>
+            <div class="total-balance-amount" id="totalBalance">$0.00</div>
+            <div class="total-balance-change positive" id="balanceChange">+0.00%</div>
+        </div>
+
+        <div class="assets-section">
+            <div class="section-title">Активы</div>
+            
+            <div class="asset-card" id="toncoin-card">
+                <div class="asset-header">
+                    <div class="asset-info">
+                        <div class="asset-icon toncoin-icon">T</div>
+                        <div class="asset-name">Toncoin</div>
+                    </div>
+                    <div class="asset-amount" id="toncoin-amount">0 TON</div>
+                </div>
+                <div class="asset-details">
+                    <div class="asset-price">
+                        <div class="asset-change positive">+0.18%</div>
+                    </div>
+                    <div class="asset-value" id="toncoin-value">$0</div>
+                </div>
             </div>
-            
-            <p style="margin-bottom: 20px; opacity: 0.8;">Для доступа к кошельку необходимо авторизоваться через Telegram</p>
-            
-            <a href="https://t.me/MuWalletBot?start=web" class="auth-btn" target="_blank">
-                📱 Авторизоваться в Telegram
-            </a>
-            
-            <div style="margin-top: 15px;">
-                <button class="auth-btn" onclick="manualAuth()">
-                    🔑 Ввести код вручную
-                </button>
+
+            <div class="asset-card" id="tether-card">
+                <div class="asset-header">
+                    <div class="asset-info">
+                        <div class="asset-icon tether-icon">U</div>
+                        <div class="asset-name">Tether</div>
+                    </div>
+                    <div class="asset-amount" id="tether-amount">0 USDT</div>
+                </div>
+                <div class="asset-details">
+                    <div class="asset-price">
+                        <div class="asset-change negative">-0.05%</div>
+                    </div>
+                    <div class="asset-value" id="tether-value">$0</div>
+                </div>
+            </div>
+
+            <div class="asset-card" id="rub-card">
+                <div class="asset-header">
+                    <div class="asset-info">
+                        <div class="asset-icon rub-icon">R</div>
+                        <div class="asset-name">Russian Ruble</div>
+                    </div>
+                    <div class="asset-amount" id="rub-amount">0 RUB</div>
+                </div>
+                <div class="asset-details">
+                    <div class="asset-price">
+                        <div class="asset-change positive">+0.12%</div>
+                    </div>
+                    <div class="asset-value" id="rub-value">$0</div>
+                </div>
+            </div>
+
+            <div class="asset-card" id="uah-card">
+                <div class="asset-header">
+                    <div class="asset-info">
+                        <div class="asset-icon uah-icon">U</div>
+                        <div class="asset-name">Ukrainian Hryvnia</div>
+                    </div>
+                    <div class="asset-amount" id="uah-amount">0 UAH</div>
+                </div>
+                <div class="asset-details">
+                    <div class="asset-price">
+                        <div class="asset-change positive">+0.08%</div>
+                    </div>
+                    <div class="asset-value" id="uah-value">$0</div>
+                </div>
             </div>
         </div>
 
-        <div id="walletContainer" class="hidden">
-            <div class="header">
-                <h1>MuWallet</h1>
-                <p>Ваш надежный кошелек</p>
-            </div>
-
-            <div class="total-balance">
-                <div class="total-balance-label">Общий баланс</div>
-                <div class="total-balance-amount" id="totalBalance">$0.00</div>
-                <div class="total-balance-change positive" id="balanceChange">+0.00%</div>
-            </div>
-
-            <div class="assets-section">
-                <div class="section-title">Активы</div>
-                
-                <div class="asset-card" id="toncoin-card">
-                    <div class="asset-header">
-                        <div class="asset-info">
-                            <div class="asset-icon toncoin-icon">T</div>
-                            <div class="asset-name">Toncoin</div>
-                        </div>
-                        <div class="asset-amount" id="toncoin-amount">0 TON</div>
-                    </div>
-                    <div class="asset-details">
-                        <div class="asset-price">
-                            <div class="asset-change positive">+0.18%</div>
-                        </div>
-                        <div class="asset-value" id="toncoin-value">$0</div>
-                    </div>
-                </div>
-
-                <div class="asset-card" id="tether-card">
-                    <div class="asset-header">
-                        <div class="asset-info">
-                            <div class="asset-icon tether-icon">U</div>
-                            <div class="asset-name">Tether</div>
-                        </div>
-                        <div class="asset-amount" id="tether-amount">0 USDT</div>
-                    </div>
-                    <div class="asset-details">
-                        <div class="asset-price">
-                            <div class="asset-change negative">-0.05%</div>
-                        </div>
-                        <div class="asset-value" id="tether-value">$0</div>
-                    </div>
-                </div>
-
-                <div class="asset-card" id="rub-card">
-                    <div class="asset-header">
-                        <div class="asset-info">
-                            <div class="asset-icon rub-icon">R</div>
-                            <div class="asset-name">Russian Ruble</div>
-                        </div>
-                        <div class="asset-amount" id="rub-amount">0 RUB</div>
-                    </div>
-                    <div class="asset-details">
-                        <div class="asset-price">
-                            <div class="asset-change positive">+0.12%</div>
-                        </div>
-                        <div class="asset-value" id="rub-value">$0</div>
-                    </div>
-                </div>
-
-                <div class="asset-card" id="uah-card">
-                    <div class="asset-header">
-                        <div class="asset-info">
-                            <div class="asset-icon uah-icon">U</div>
-                            <div class="asset-name">Ukrainian Hryvnia</div>
-                        </div>
-                        <div class="asset-amount" id="uah-amount">0 UAH</div>
-                    </div>
-                    <div class="asset-details">
-                        <div class="asset-price">
-                            <div class="asset-change positive">+0.08%</div>
-                        </div>
-                        <div class="asset-value" id="uah-value">$0</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="actions">
-                <button class="action-btn" onclick="refreshBalance()">🔄 Обновить</button>
-                <button class="action-btn" onclick="logout()">🚪 Выйти</button>
-            </div>
+        <div class="actions">
+            <button class="action-btn" onclick="refreshBalance()">🔄 Обновить</button>
+            <button class="action-btn" onclick="openTelegram()">📱 Открыть бота</button>
         </div>
 
         <div id="loadingContainer" class="loading hidden">
             Загрузка данных...
         </div>
+
+        <div id="errorContainer" class="error-message hidden">
+            Ошибка загрузки данных
+        </div>
     </div>
 
     <script>
         // Конфигурация API
-        const API_BASE_URL = 'https://your-server.com/api'; // Замените на ваш сервер
+        const API_BASE_URL = 'http://localhost:5000'; // Замените на адрес вашего сервера
         
-        // Текущий пользователь
-        let currentUser = null;
-        let authToken = null;
+        // ID пользователя для которого показывать баланс (можно указать конкретный ID)
+        const USER_ID = 123456789; // Замените на нужный ID пользователя
 
         // Данные баланса
         let userBalance = {
@@ -445,90 +395,45 @@
         // Текущая тема
         let currentTheme = 'dark';
 
-        // Проверка авторизации при загрузке
+        // Загрузка баланса при старте
         document.addEventListener('DOMContentLoaded', function() {
-            checkAuth();
+            loadBalance();
             
-            // Проверяем URL параметры для авторизации
-            const urlParams = new URLSearchParams(window.location.search);
-            const token = urlParams.get('token');
-            const userId = urlParams.get('user_id');
-            
-            if (token && userId) {
-                completeAuth(token, userId);
-            }
+            // Автообновление каждые 30 секунд
+            setInterval(loadBalance, 30000);
         });
-
-        // Проверка авторизации
-        async function checkAuth() {
-            const savedToken = localStorage.getItem('muwallet_token');
-            const savedUserId = localStorage.getItem('muwallet_user_id');
-            
-            if (savedToken && savedUserId) {
-                authToken = savedToken;
-                currentUser = { id: parseInt(savedUserId) };
-                
-                // Проверяем валидность токена
-                const isValid = await validateToken();
-                if (isValid) {
-                    showWallet();
-                    loadBalance();
-                } else {
-                    logout();
-                }
-            } else {
-                showAuth();
-            }
-        }
-
-        // Валидация токена
-        async function validateToken() {
-            try {
-                const response = await fetch(`${API_BASE_URL}/validate-token`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${authToken}`
-                    },
-                    body: JSON.stringify({
-                        user_id: currentUser.id
-                    })
-                });
-                
-                return response.ok;
-            } catch (error) {
-                console.error('Token validation error:', error);
-                return false;
-            }
-        }
 
         // Загрузка баланса
         async function loadBalance() {
             showLoading();
+            hideError();
             
             try {
-                const response = await fetch(`${API_BASE_URL}/balance`, {
+                const response = await fetch(`${API_BASE_URL}/api/balance_simple`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${authToken}`
                     },
                     body: JSON.stringify({
-                        user_id: currentUser.id
+                        user_id: USER_ID
                     })
                 });
                 
                 if (response.ok) {
                     const data = await response.json();
-                    userBalance = data.balance;
-                    updateUI();
-                    showWallet();
+                    if (data.success) {
+                        userBalance = data.balance;
+                        updateUI();
+                        showWallet();
+                    } else {
+                        throw new Error(data.error || 'Ошибка загрузки баланса');
+                    }
                 } else {
-                    throw new Error('Failed to load balance');
+                    throw new Error('Ошибка сервера: ' + response.status);
                 }
             } catch (error) {
                 console.error('Balance loading error:', error);
-                alert('Ошибка загрузки баланса. Попробуйте позже.');
+                showError('Ошибка загрузки баланса: ' + error.message);
                 showWallet();
             }
         }
@@ -553,35 +458,6 @@
             // UAH
             document.getElementById('uah-amount').textContent = `${userBalance.uah.toFixed(2)} UAH`;
             document.getElementById('uah-value').textContent = `$${(userBalance.uah * 0.026).toFixed(2)}`;
-            
-            // Информация о пользователе
-            document.getElementById('userName').textContent = `ID: ${currentUser.id}`;
-        }
-
-        // Завершение авторизации
-        function completeAuth(token, userId) {
-            authToken = token;
-            currentUser = { id: parseInt(userId) };
-            
-            // Сохраняем в localStorage
-            localStorage.setItem('muwallet_token', token);
-            localStorage.setItem('muwallet_user_id', userId);
-            
-            showWallet();
-            loadBalance();
-            
-            // Очищаем URL параметры
-            window.history.replaceState({}, document.title, window.location.pathname);
-        }
-
-        // Ручная авторизация
-        function manualAuth() {
-            const token = prompt('Введите ваш токен авторизации:');
-            const userId = prompt('Введите ваш ID пользователя:');
-            
-            if (token && userId) {
-                completeAuth(token, userId);
-            }
         }
 
         // Обновление баланса
@@ -589,34 +465,30 @@
             loadBalance();
         }
 
-        // Выход
-        function logout() {
-            currentUser = null;
-            authToken = null;
-            localStorage.removeItem('muwallet_token');
-            localStorage.removeItem('muwallet_user_id');
-            showAuth();
+        // Открыть Telegram бота
+        function openTelegram() {
+            window.open('https://t.me/MuWalletBot', '_blank');
         }
 
         // Переключение видимости контейнеров
-        function showAuth() {
-            document.getElementById('authContainer').classList.remove('hidden');
-            document.getElementById('walletContainer').classList.add('hidden');
-            document.getElementById('loadingContainer').classList.add('hidden');
-            document.getElementById('userInfo').style.display = 'none';
-        }
-
         function showWallet() {
-            document.getElementById('authContainer').classList.add('hidden');
-            document.getElementById('walletContainer').classList.remove('hidden');
             document.getElementById('loadingContainer').classList.add('hidden');
-            document.getElementById('userInfo').style.display = 'block';
+            document.getElementById('errorContainer').classList.add('hidden');
         }
 
         function showLoading() {
-            document.getElementById('authContainer').classList.add('hidden');
-            document.getElementById('walletContainer').classList.add('hidden');
             document.getElementById('loadingContainer').classList.remove('hidden');
+            document.getElementById('errorContainer').classList.add('hidden');
+        }
+
+        function showError(message) {
+            document.getElementById('errorContainer').classList.remove('hidden');
+            document.getElementById('errorContainer').textContent = message;
+            document.getElementById('loadingContainer').classList.add('hidden');
+        }
+
+        function hideError() {
+            document.getElementById('errorContainer').classList.add('hidden');
         }
 
         // Переключение темы
